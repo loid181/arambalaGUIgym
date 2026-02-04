@@ -16,6 +16,7 @@ public class trainerdashboard extends javax.swing.JFrame {
      */
     public trainerdashboard(String name) {
         initComponents();
+jLabel13.setText("Welcome, " + name);
     }
 
     

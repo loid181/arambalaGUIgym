@@ -18,31 +18,31 @@ import adminmenu.*;
 public class admindashboard extends javax.swing.JFrame {
 
 
-public admindashboard(String name) {
-    initComponents();
-    menu.setBackground(new java.awt.Color(39, 41, 46));
-    menu.setOpaque(true);
-    
-    // 2. Fetch the session and display it
-    displayUserInfo();
-    
-}
+
 private void displayUserInfo() {
     config.UserSession sess = config.UserSession.getInstance();
     
-    if (sess.getFname() != null) {
-        namead.setText("Name: " + sess.getFname() + " " + sess.getLname());
-        phonead.setText("Phone: " + sess.getContact());
-        gmailad.setText("Email: " + sess.getEmail());
-        usertypead.setText("UserType: " + sess.getType());
-    } else {
-        namead.setText("Name: ");
-    }
+    // Check if fullName is set to determine if logged in
+    if (sess.getFullName() != null) {
+    namead.setText("Name: " + sess.getFullName()); // Uses full_name from DB
+    phonead.setText("Phone: " + sess.getContact());
+    gmailad.setText("Email: " + sess.getEmail());
+    usertypead.setText("UserType: " + sess.getType());
+} else {
+    namead.setText("Name: Guest");
 }
-
-    public admindashboard() {
-initComponents();
-    displayUserInfo();
+}
+   public admindashboard() {
+        initComponents();
+        
+        // Set UI styling
+        if (menu != null) {
+            menu.setBackground(new java.awt.Color(39, 41, 46));
+            menu.setOpaque(true);
+        }
+        
+        // Fetch and display user data
+        displayUserInfo();
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -323,8 +323,8 @@ initComponents();
  public static void main(String args[]) {
     java.awt.EventQueue.invokeLater(new Runnable() {
         public void run() {
-            // This just opens the window
-            new admindashboard("Admin").setVisible(true); 
+            // Removed "Admin" string because your constructor doesn't accept it
+            new admindashboard().setVisible(true); 
         }
     });
 }

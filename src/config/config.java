@@ -6,16 +6,15 @@ import net.proteanit.sql.DbUtils;
 public class config {
 
    public static Connection connectDB() {
-        Connection con = null;
         try {
-            Class.forName("org.sqlite.JDBC"); // Load the SQLite JDBC driver
-            con = DriverManager.getConnection("jdbc:sqlite:gymDB.db"); // Establish connection
-            System.out.println("Connection Successful");
+            Class.forName("org.sqlite.JDBC");
+            return DriverManager.getConnection("jdbc:sqlite:gymDB.db");
         } catch (Exception e) {
-            System.out.println("Connection Failed: " + e);
+            e.printStackTrace();
+            return null;
         }
-        return con;
     }
+   
 public void addRecord(String sql, Object... values) {
     try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {

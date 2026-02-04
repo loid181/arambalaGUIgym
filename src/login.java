@@ -9,6 +9,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
 import config.Session;
+import config.UserSession;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -292,7 +293,6 @@ String email = em.getText().trim();
     }
 
     try {
-        // 1. Get connection (static call)
         Connection conn = config.connectDB(); 
         
         if (conn == null) {
@@ -300,10 +300,8 @@ String email = em.getText().trim();
             return;
         }
 
-        // 2. Hash the password using your static helper
         String hashedPass = config.hashPassword(password); 
 
-        // 3. Prepare Query
         String sql = "SELECT * FROM users_tbl WHERE email = ? AND password = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
@@ -311,39 +309,39 @@ String email = em.getText().trim();
 
         ResultSet rs = pstmt.executeQuery();
 
-      if (rs.next()) {
-    // 1. Initialize the Session
-    Session sess = Session.getInstance();
-    
-    // 2. Set Session data from Result Set
+       // Inside your login result processing
+if (rs.next()) {
+    String role = rs.getString("u_type"); // This defines 'role' so the code below works
+    UserSession sess = UserSession.getInstance();
     sess.setId(rs.getInt("u_id"));
-    sess.setName(rs.getString("full_name"));
+    sess.setFullName(rs.getString("full_name")); // Map to full_name column
+    sess.setEmail(rs.getString("email"));
+    sess.setContact(rs.getString("phonenumber"));
     sess.setType(rs.getString("u_type"));
     
-    String role = sess.getType();
-    JOptionPane.showMessageDialog(null, "LOGIN SUCCESS! Welcome " + sess.getName());
-
-    // 3. Open the correct dashboard based on role
-  if (role.equalsIgnoreCase("Admin")) {
-    new Admindash.admindashboard().setVisible(true); // Admin works because it likely has a default constructor
-    this.dispose();
-} 
-else if (role.equalsIgnoreCase("Trainer")) {
-    // FIX: Pass the name from your session or database
-    new Admindash.trainerdashboard(sess.getName()).setVisible(true); 
-    this.dispose();
-} 
-else if (role.equalsIgnoreCase("Member")) {
-    // FIX: Pass the name here too
-    new Admindash.memberdashboard(sess.getName()).setVisible(true); 
-    this.dispose();
-}    else {
-        JOptionPane.showMessageDialog(null, "Account type not recognized!");
-    }
-}else {
+    // Redirect logic...
+           // 2. Redirect logic
+            if (role.equalsIgnoreCase("Admin")) {
+                new Admindash.admindashboard().setVisible(true);
+                this.dispose();
+            } 
+            else if (role.equalsIgnoreCase("Trainer")) {
+                // Use getFullName() and ensure your trainerdashboard constructor accepts it
+                new Admindash.trainerdashboard(sess.getFullName()).setVisible(true);
+                this.dispose();
+            } 
+            else if (role.equalsIgnoreCase("Member")) {
+                // Use getFullName() and ensure your memberdashboard constructor accepts it
+                new Admindash.memberdashboard(sess.getFullName()).setVisible(true);
+                this.dispose();
+            }   
+            else {
+                JOptionPane.showMessageDialog(null, "Account type not recognized!");
+            }
+        } else {
             JOptionPane.showMessageDialog(null, "Invalid Email or Password.");
         }        
-        // Clean up
+        
         rs.close();
         pstmt.close();
         conn.close();
@@ -353,6 +351,8 @@ else if (role.equalsIgnoreCase("Member")) {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "System Error: " + e.getMessage());
     }
+     
+    
     }//GEN-LAST:event_loginbuttonActionPerformed
 
     private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited

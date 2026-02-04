@@ -13,6 +13,7 @@ public class memberdashboard extends javax.swing.JFrame {
 
     public memberdashboard(String name) {
         initComponents();
+jLabel13.setText("Welcome, " + name);
     }
 
     

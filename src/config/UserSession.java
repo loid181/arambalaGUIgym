@@ -1,20 +1,15 @@
 package config;
 
 public class UserSession {
-    
     private static UserSession instance;
     private int id;
-    private String fname;
-    private String lname;
+    private String fullName; // Changed from fname/lname to match DB
     private String email;
-    private String username;
-    private String type;
     private String contact;
+    private String type;
 
-    // Private constructor prevents creating multiple instances
     private UserSession() {}
 
-    // This is the "number 1" fix: The getInstance method
     public static UserSession getInstance() {
         if (instance == null) {
             instance = new UserSession();
@@ -22,36 +17,19 @@ public class UserSession {
         return instance;
     }
 
-    // Getters and Setters (Required for your dashboard code)
+    // Getters and Setters
+    public String getFullName() { return fullName; }
+    public void setFullName(String fullName) { this.fullName = fullName; }
+
     public int getId() { return id; }
     public void setId(int id) { this.id = id; }
-
-    public String getFname() { return fname; }
-    public void setFname(String fname) { this.fname = fname; }
-
-    public String getLname() { return lname; }
-    public void setLname(String lname) { this.lname = lname; }
 
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getUsername() { return username; }
-    public void setUsername(String username) { this.username = username; }
-
-    public String getType() { return type; }
-    public void setType(String type) { this.type = type; }
-
     public String getContact() { return contact; }
     public void setContact(String contact) { this.contact = contact; }
 
-    // Clear session on logout
-    public void clear() {
-        id = 0;
-        fname = null;
-        lname = null;
-        email = null;
-        username = null;
-        type = null;
-        contact = null;
-    }
+    public String getType() { return type; }
+    public void setType(String type) { this.type = type; }
 }
