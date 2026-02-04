@@ -11,12 +11,11 @@ package Admindash;
  */
 public class memberdashboard extends javax.swing.JFrame {
 
-    /**
-     * Creates new form memberdashboard
-     */
     public memberdashboard(String name) {
         initComponents();
     }
+
+    
 
     /**
      * This method is called from within the constructor to initialize the form.

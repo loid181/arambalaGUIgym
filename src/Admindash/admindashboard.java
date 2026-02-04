@@ -20,13 +20,30 @@ public class admindashboard extends javax.swing.JFrame {
 
 public admindashboard(String name) {
     initComponents();
-    
-    // Set UI Styling
     menu.setBackground(new java.awt.Color(39, 41, 46));
     menu.setOpaque(true);
     
-   // Assign data to your label
+    // 2. Fetch the session and display it
+    displayUserInfo();
+    
 }
+private void displayUserInfo() {
+    config.UserSession sess = config.UserSession.getInstance();
+    
+    if (sess.getFname() != null) {
+        namead.setText("Name: " + sess.getFname() + " " + sess.getLname());
+        phonead.setText("Phone: " + sess.getContact());
+        gmailad.setText("Email: " + sess.getEmail());
+        usertypead.setText("UserType: " + sess.getType());
+    } else {
+        namead.setText("Name: ");
+    }
+}
+
+    public admindashboard() {
+initComponents();
+    displayUserInfo();
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -212,7 +229,7 @@ public admindashboard(String name) {
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 604, Short.MAX_VALUE)
+            .addGap(0, 514, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -227,8 +244,8 @@ public admindashboard(String name) {
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addComponent(menu)
+                .addContainerGap())
         );
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 730, 520));

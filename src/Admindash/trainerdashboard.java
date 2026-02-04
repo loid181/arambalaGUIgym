@@ -18,6 +18,7 @@ public class trainerdashboard extends javax.swing.JFrame {
         initComponents();
     }
 
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -215,11 +216,11 @@ public class trainerdashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        /* Create and display the form */
-java.awt.EventQueue.invokeLater(new Runnable() {
+        /* Create and display the form */java.awt.EventQueue.invokeLater(new Runnable() {
     public void run() {
-        // Change this line: add "null" or a default string inside the parentheses
-        new trainerdashboard("Default User").setVisible(true); 
+        // ERROR: new trainerdashboard().setVisible(true);
+        // FIX: Add a string inside the parentheses
+        new trainerdashboard("Admin").setVisible(true); 
     }
 });
     }

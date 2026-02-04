@@ -86,7 +86,7 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
         jLabel1 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(39, 41, 46));
-        jPanel1.setPreferredSize(new java.awt.Dimension(686, 370));
+        jPanel1.setPreferredSize(new java.awt.Dimension(686, 514));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         userst.setBackground(new java.awt.Color(39, 41, 46));
@@ -102,12 +102,12 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
         ));
         userst.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_ALL_COLUMNS);
         userst.setGridColor(new java.awt.Color(153, 153, 153));
-        userst.setPreferredSize(new java.awt.Dimension(686, 370));
+        userst.setPreferredSize(new java.awt.Dimension(686, 514));
         userst.setSelectionBackground(new java.awt.Color(204, 204, 204));
         userst.setSelectionForeground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(userst);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 690, 380));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 690, 470));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(170, 231, 37));
@@ -119,14 +119,14 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(0, 13, Short.MAX_VALUE))
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 108, Short.MAX_VALUE))
         );
 
         pack();

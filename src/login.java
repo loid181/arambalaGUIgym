@@ -8,7 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
-
+import config.Session;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -291,46 +291,67 @@ String email = em.getText().trim();
         return;
     }
 
-    // Use the hashing method from your config class
-    String hashedPass = config.hashPassword(password); 
+    try {
+        // 1. Get connection (static call)
+        Connection conn = config.connectDB(); 
+        
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "Database Connection Failed!");
+            return;
+        }
 
-    // Query to find the user
-    String sql = "SELECT u_id, u_type, full_name FROM users_tbl WHERE email = ? AND password = ?";
-    
-    try (Connection conn = config.connectDB(); 
-         PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        // 2. Hash the password using your static helper
+        String hashedPass = config.hashPassword(password); 
 
+        // 3. Prepare Query
+        String sql = "SELECT * FROM users_tbl WHERE email = ? AND password = ?";
+        PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
         pstmt.setString(2, hashedPass);
 
-        try (ResultSet rs = pstmt.executeQuery()) {
-            if (rs.next()) {
-                int id = rs.getInt("u_id");
-                String userType = rs.getString("u_type");
-                String name = rs.getString("full_name");
+        ResultSet rs = pstmt.executeQuery();
 
-                JOptionPane.showMessageDialog(null, "LOGIN SUCCESS! Welcome " + name);
+      if (rs.next()) {
+    // 1. Initialize the Session
+    Session sess = Session.getInstance();
+    
+    // 2. Set Session data from Result Set
+    sess.setId(rs.getInt("u_id"));
+    sess.setName(rs.getString("full_name"));
+    sess.setType(rs.getString("u_type"));
+    
+    String role = sess.getType();
+    JOptionPane.showMessageDialog(null, "LOGIN SUCCESS! Welcome " + sess.getName());
 
-                // Open the correct dashboard based on user type
-               if (userType.equalsIgnoreCase("Admin")) {
-    // Convert int to String using String.valueOf()
-    new admindashboard(String.valueOf(id)).setVisible(true); 
-    this.dispose(); 
-} else if (userType.equalsIgnoreCase("Trainer")) {
-    new trainerdashboard(String.valueOf(id)).setVisible(true);
+    // 3. Open the correct dashboard based on role
+  if (role.equalsIgnoreCase("Admin")) {
+    new Admindash.admindashboard().setVisible(true); // Admin works because it likely has a default constructor
     this.dispose();
-} else if (userType.equalsIgnoreCase("Member")) {
-    new memberdashboard(String.valueOf(id)).setVisible(true);
+} 
+else if (role.equalsIgnoreCase("Trainer")) {
+    // FIX: Pass the name from your session or database
+    new Admindash.trainerdashboard(sess.getName()).setVisible(true); 
     this.dispose();
-}
-                
-                this.dispose(); // Close login window
-            } else {
-                JOptionPane.showMessageDialog(null, "INVALID EMAIL OR PASSWORD!");
-            }
-        }
+} 
+else if (role.equalsIgnoreCase("Member")) {
+    // FIX: Pass the name here too
+    new Admindash.memberdashboard(sess.getName()).setVisible(true); 
+    this.dispose();
+}    else {
+        JOptionPane.showMessageDialog(null, "Account type not recognized!");
+    }
+}else {
+            JOptionPane.showMessageDialog(null, "Invalid Email or Password.");
+        }        
+        // Clean up
+        rs.close();
+        pstmt.close();
+        conn.close();
+
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Database Error: " + e.getMessage());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "System Error: " + e.getMessage());
     }
     }//GEN-LAST:event_loginbuttonActionPerformed
 
