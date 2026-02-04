@@ -37,6 +37,7 @@ desktopInstance.setOpaque(true);
         trainer = new javax.swing.JLabel();
         admins = new javax.swing.JLabel();
         members = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         desktopInstance = new javax.swing.JDesktopPane() {
             @Override
             protected void paintComponent(java.awt.Graphics g) {
@@ -46,6 +47,7 @@ desktopInstance.setOpaque(true);
                 g.fillRect(0, 0, getWidth(), getHeight());
             }
         };
+        admins1 = new javax.swing.JLabel();
 
         jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -94,7 +96,7 @@ desktopInstance.setOpaque(true);
                 adminsMouseExited(evt);
             }
         });
-        header.add(admins, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 40, 170, -1));
+        header.add(admins, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 40, 170, -1));
 
         members.setBackground(new java.awt.Color(51, 51, 51));
         members.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
@@ -114,19 +116,47 @@ desktopInstance.setOpaque(true);
         });
         header.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel2.setText("Select a User type");
+        header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 180, -1));
+
         body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 90));
 
         desktopInstance.setBackground(new java.awt.Color(39, 41, 46));
+
+        admins1.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
+        admins1.setForeground(new java.awt.Color(170, 231, 37));
+        admins1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        admins1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                admins1MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                admins1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                admins1MouseExited(evt);
+            }
+        });
+
+        desktopInstance.setLayer(admins1, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout desktopInstanceLayout = new javax.swing.GroupLayout(desktopInstance);
         desktopInstance.setLayout(desktopInstanceLayout);
         desktopInstanceLayout.setHorizontalGroup(
             desktopInstanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
+            .addGroup(desktopInstanceLayout.createSequentialGroup()
+                .addGap(326, 326, 326)
+                .addComponent(admins1)
+                .addContainerGap(474, Short.MAX_VALUE))
         );
         desktopInstanceLayout.setVerticalGroup(
             desktopInstanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 500, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, desktopInstanceLayout.createSequentialGroup()
+                .addContainerGap(313, Short.MAX_VALUE)
+                .addComponent(admins1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(149, 149, 149))
         );
 
         body.add(desktopInstance, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 800, 500));
@@ -192,6 +222,18 @@ desktopInstance.setOpaque(true);
         desktopInstance.add(up).setVisible(true);
     }//GEN-LAST:event_membersMouseClicked
 
+    private void admins1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_admins1MouseClicked
+
+    private void admins1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_admins1MouseEntered
+
+    private void admins1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_admins1MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -229,10 +271,12 @@ desktopInstance.setOpaque(true);
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel admins;
+    private javax.swing.JLabel admins1;
     private javax.swing.JPanel body;
     private javax.swing.JDesktopPane desktopInstance;
     private javax.swing.JPanel header;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JTextField jTextField4;
     private javax.swing.JLabel members;
     private javax.swing.JLabel trainer;

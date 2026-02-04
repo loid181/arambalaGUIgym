@@ -14,12 +14,8 @@ public class memberdashboard extends javax.swing.JFrame {
     /**
      * Creates new form memberdashboard
      */
-    public memberdashboard() {
-        initComponents();
-    }
-
     public memberdashboard(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        initComponents();
     }
 
     /**
@@ -33,7 +29,6 @@ public class memberdashboard extends javax.swing.JFrame {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -48,26 +43,8 @@ public class memberdashboard extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(910, 610));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/profile1.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
-
-        jLabel9.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("1.        View Profile");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel9MouseExited(evt);
-            }
-        });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/profile1.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
 
         jLabel10.setBackground(new java.awt.Color(51, 51, 51));
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
@@ -123,13 +100,11 @@ public class memberdashboard extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/view.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/view.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
 
-        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/enroll.png"))); // NOI18N
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/enroll.png"))); // NOI18N
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 390, -1, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/weightlifter.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(51, 51, 51));
@@ -164,19 +139,8 @@ public class memberdashboard extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseClicked
-
-    private void jLabel9MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseEntered
-
-    private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jLabel9MouseExited
 
     private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
         // TODO add your handling code here:
@@ -254,11 +218,13 @@ public class memberdashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new memberdashboard().setVisible(true);
-            }
-        });
+        /* Create and display the form */
+java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+        // Change this line: add "null" or a default string inside the parentheses
+        new memberdashboard("Default User").setVisible(true); 
+    }
+});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -270,7 +236,6 @@ public class memberdashboard extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }

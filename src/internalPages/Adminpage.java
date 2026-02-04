@@ -4,11 +4,14 @@
  * and open the template in the editor.
  */
 package internalPages;
+import config.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
+import static sun.security.jgss.GSSUtil.login;
 /**
  *
  * @author Lloyd's PC
@@ -47,8 +50,8 @@ public class Adminpage extends javax.swing.JInternalFrame {
         pass = new javax.swing.JPasswordField();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(39, 41, 46));
         jPanel2.setPreferredSize(new java.awt.Dimension(800, 500));
@@ -125,14 +128,23 @@ public class Adminpage extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 180, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/admin.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin.png"))); // NOI18N
         jPanel2.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(170, 231, 37));
         jLabel7.setText("Full name:");
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel3.setText("LOGIN NOW");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 410, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -167,44 +179,55 @@ public class Adminpage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_passActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        String f_name = fullname.getText();
-        String u_email = email.getText();
-        String u_phone = phone.getText();
-        String u_pass = new String(pass.getPassword()); 
+       String f_name = fullname.getText();
+    String u_email = email.getText();
+    String u_phone = phone.getText();
+    String u_pass = new String(pass.getPassword()); 
 
-        if (f_name.isEmpty() || u_email.isEmpty() || u_pass.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
-            return;
-        }
+    if (f_name.isEmpty() || u_email.isEmpty() || u_pass.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
+        return;
+    }
 
-        try {
-            String url = "jdbc:sqlite:C:/Users/PC/Documents/NetBeansProjects/Arambalagui/gymDB.db";
-            Connection conn = DriverManager.getConnection(url);
+    try {
+        // 1. HASH THE PASSWORD HERE
+        // Assuming the method is in your 'config' class. 
+        // If it's in a different class, change 'config' to that class name.
+        String hashedPass = config.hashPassword(u_pass);
 
-            String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
-            PreparedStatement pst = conn.prepareStatement(sql);
-            
-            pst.setString(1, f_name);
-            pst.setString(2, u_email);
-            pst.setString(3, u_phone);
-            pst.setString(4, u_pass);
-            pst.setString(5, "Admin"); 
+        String url = "jdbc:sqlite:C:/Users/PC/Documents/NetBeansProjects/Arambalagui/gymDB.db";
+        Connection conn = DriverManager.getConnection(url);
 
-            pst.executeUpdate();
-            JOptionPane.showMessageDialog(this, "Successfully Registered as Admin!");
-            
-            fullname.setText("");
-            email.setText("");
-            phone.setText("");
-            pass.setText("");
-            
-            conn.close();
+        String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
+        PreparedStatement pst = conn.prepareStatement(sql);
+        
+        pst.setString(1, f_name);
+        pst.setString(2, u_email);
+        pst.setString(3, u_phone);
+        pst.setString(4, hashedPass); // <--- Use the hashed version here
+        pst.setString(5, "Admin"); 
 
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
-        }
-    
+        pst.executeUpdate();
+        JOptionPane.showMessageDialog(this, "Successfully Registered as Admin!");
+        
+        // Clear fields
+        fullname.setText("");
+        email.setText("");
+        phone.setText("");
+        pass.setText("");
+        
+        conn.close();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+    }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        login r = new login();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -212,7 +235,7 @@ public class Adminpage extends javax.swing.JInternalFrame {
     private javax.swing.JTextField fullname;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;

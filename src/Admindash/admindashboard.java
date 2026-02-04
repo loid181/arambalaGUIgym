@@ -20,10 +20,12 @@ public class admindashboard extends javax.swing.JFrame {
 
 public admindashboard(String name) {
     initComponents();
-    // Add this inside your admindashboard(String name) constructor
-menu.setBackground(new java.awt.Color(39,41,46)); // Dark grey example
-menu.setOpaque(true);
     
+    // Set UI Styling
+    menu.setBackground(new java.awt.Color(39, 41, 46));
+    menu.setOpaque(true);
+    
+   // Assign data to your label
 }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -55,8 +57,11 @@ menu.setOpaque(true);
         jLabel11 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
         menu = new javax.swing.JDesktopPane();
+        gmailad = new javax.swing.JLabel();
+        phonead = new javax.swing.JLabel();
+        namead = new javax.swing.JLabel();
+        usertypead = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
 
         userst.setBackground(new java.awt.Color(0, 0, 0));
         userst.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -166,7 +171,7 @@ menu.setOpaque(true);
         });
         jPanel2.add(viewUsers, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 180, 40));
 
-        jLabel5.setIcon(new javax.swing.ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\gymgui\\src\\view.png")); // NOI18N
+        jLabel5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/viewad.png"))); // NOI18N
         jLabel5.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jLabel5.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -175,7 +180,7 @@ menu.setOpaque(true);
         });
         jPanel2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, -1, -1));
 
-        jLabel7.setIcon(new javax.swing.ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\gymgui\\src\\managementmem.png")); // NOI18N
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/managead.png"))); // NOI18N
         jLabel7.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
 
@@ -184,7 +189,7 @@ menu.setOpaque(true);
         jLabel9.setText("Manage Trainers");
         jPanel2.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, -1, -1));
 
-        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/managetrain.png"))); // NOI18N
+        jLabel10.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/managetrain.png"))); // NOI18N
         jLabel10.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 440, -1, -1));
 
@@ -199,25 +204,15 @@ menu.setOpaque(true);
 
         menu.setBackground(new java.awt.Color(39, 41, 46));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon("C:\\Users\\PC\\Documents\\NetBeansProjects\\gymgui\\src\\admin-panel1.png")); // NOI18N
-
-        menu.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
         javax.swing.GroupLayout menuLayout = new javax.swing.GroupLayout(menu);
         menu.setLayout(menuLayout);
         menuLayout.setHorizontalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, menuLayout.createSequentialGroup()
-                .addContainerGap(234, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(202, 202, 202))
+            .addGap(0, 686, Short.MAX_VALUE)
         );
         menuLayout.setVerticalGroup(
             menuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(menuLayout.createSequentialGroup()
-                .addGap(76, 76, 76)
-                .addComponent(jLabel1)
-                .addContainerGap(278, Short.MAX_VALUE))
+            .addGap(0, 604, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -225,24 +220,45 @@ menu.setOpaque(true);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
+                .addGap(19, 19, 19)
                 .addComponent(menu)
-                .addGap(24, 24, 24))
+                .addGap(25, 25, 25))
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(23, 23, 23)
                 .addComponent(menu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 90, 730, 520));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 30)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel2.setText("WELCOME TO STAFF/ADMIN DASHBOARD");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 20, -1, -1));
+        gmailad.setBackground(new java.awt.Color(170, 231, 37));
+        gmailad.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        gmailad.setForeground(new java.awt.Color(170, 231, 37));
+        gmailad.setText("gmail:");
+        jPanel1.add(gmailad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
+
+        phonead.setBackground(new java.awt.Color(170, 231, 37));
+        phonead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        phonead.setForeground(new java.awt.Color(170, 231, 37));
+        phonead.setText("Phone:");
+        jPanel1.add(phonead, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
+
+        namead.setBackground(new java.awt.Color(170, 231, 37));
+        namead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        namead.setForeground(new java.awt.Color(170, 231, 37));
+        namead.setText("Name:");
+        jPanel1.add(namead, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+
+        usertypead.setBackground(new java.awt.Color(170, 231, 37));
+        usertypead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        usertypead.setForeground(new java.awt.Color(170, 231, 37));
+        usertypead.setText("UserType:");
+        jPanel1.add(usertypead, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/profile1.png"))); // NOI18N
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -301,10 +317,10 @@ menu.setOpaque(true);
     private javax.swing.JLabel adminemail1;
     private javax.swing.JLabel adminname;
     private javax.swing.JLabel adminphonenumber;
+    private javax.swing.JLabel gmailad;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -318,7 +334,10 @@ menu.setOpaque(true);
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDesktopPane menu;
+    private javax.swing.JLabel namead;
+    private javax.swing.JLabel phonead;
     private javax.swing.JTable userst;
+    private javax.swing.JLabel usertypead;
     private javax.swing.JLabel viewUsers;
     // End of variables declaration//GEN-END:variables
 }

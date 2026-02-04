@@ -4,44 +4,33 @@ import javax.swing.JTable;
 import net.proteanit.sql.DbUtils;
 
 public class config {
-    
-    public static Connection connectDB() {
-    Connection con = null;
-    try {
-        Class.forName("org.sqlite.JDBC"); 
-        
-        // FIX: Added the missing / after the C: and used forward slashes for safety
-        String url = "jdbc:sqlite:C:/Users/PC/Documents/NetBeansProjects/Arambalagui/gymDB.db";
-        
-        con = DriverManager.getConnection(url); 
-        System.out.println("Connection Successful");
-    } catch (Exception e) {
-        System.out.println("Connection Failed: " + e.getMessage());
-    }
-    return con;
-}
 
-    // This one checks IF the user exists (returns true/false)
-    public boolean authenticate(String sql, Object... values) {
-        try (Connection conn = connectDB();
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
-            for (int i = 0; i < values.length; i++) {
-                pstmt.setObject(i + 1, values[i]);
-            }
-
-            try (ResultSet rs = pstmt.executeQuery()) {
-                return rs.next(); 
-            }
-        } catch (SQLException e) {
-            System.out.println("Login Error: " + e.getMessage());
+   public static Connection connectDB() {
+        Connection con = null;
+        try {
+            Class.forName("org.sqlite.JDBC"); // Load the SQLite JDBC driver
+            con = DriverManager.getConnection("jdbc:sqlite:gymDB.db"); // Establish connection
+            System.out.println("Connection Successful");
+        } catch (Exception e) {
+            System.out.println("Connection Failed: " + e);
         }
-        return false;
+        return con;
     }
+public void addRecord(String sql, Object... values) {
+    try (Connection conn = connectDB();
+         PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
-    // This one gets the USER TYPE (returns "Admin", "User", etc.)
-    // RENAMED to avoid conflict
-   public String authenticateUser(String sql, Object... values) {
+        for (int i = 0; i < values.length; i++) {
+            pstmt.setObject(i + 1, values[i]);
+        }
+
+        pstmt.executeUpdate();
+        System.out.println("Record added successfully!");
+    } catch (SQLException e) {
+        System.out.println("Error adding record: " + e.getMessage());
+    }
+}
+public String authenticate(String sql, Object... values) {
     try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
@@ -51,30 +40,32 @@ public class config {
 
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
-                return rs.getString("u_type"); // Returns "Admin" or whatever is in your DB
+                return rs.getString("type");
             }
         }
     } catch (SQLException e) {
-        System.out.println("Query Error: " + e.getMessage());
+        System.out.println("Login Error: " + e.getMessage());
     }
-    return null; // Returns null if no user is found
+    return null;
 }
-
-    public void addRecord(String sql, Object... values) {
+    public String authenticateUser(String sql, Object... values) {
         try (Connection conn = connectDB();
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-
             for (int i = 0; i < values.length; i++) {
                 pstmt.setObject(i + 1, values[i]);
             }
-
-            pstmt.executeUpdate();
-            System.out.println("Record added successfully!");
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getString("u_type");
+                }
+            }
         } catch (SQLException e) {
-            System.out.println("Error adding record: " + e.getMessage());
+            System.out.println("Query Error: " + e.getMessage());
         }
+        return null;
     }
-public void displayData(String sql, javax.swing.JTable table) {
+
+   public void displayData(String sql, javax.swing.JTable table) {
     try (Connection conn = connectDB();
          PreparedStatement pstmt = conn.prepareStatement(sql);
          ResultSet rs = pstmt.executeQuery()) {
@@ -86,6 +77,20 @@ public void displayData(String sql, javax.swing.JTable table) {
         System.out.println("Error displaying data: " + e.getMessage());
     }
 }
-    
-   
+    public static String hashPassword(String password) {
+        try {
+            java.security.MessageDigest md = java.security.MessageDigest.getInstance("SHA-256");
+            byte[] hashedBytes = md.digest(password.getBytes(java.nio.charset.StandardCharsets.UTF_8));
+            StringBuilder hexString = new StringBuilder();
+            for (byte b : hashedBytes) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) hexString.append('0');
+                hexString.append(hex);
+            }
+            return hexString.toString();
+        } catch (java.security.NoSuchAlgorithmException e) {
+            System.out.println("Error hashing password: " + e.getMessage());
+            return null;
+        }
+    }
 }

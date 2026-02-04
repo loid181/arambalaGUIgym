@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import static sun.security.jgss.GSSUtil.login;
 
 public class Memberpage extends javax.swing.JInternalFrame {
 
@@ -54,6 +55,7 @@ public class Memberpage extends javax.swing.JInternalFrame {
         jButton2 = new javax.swing.JButton();
         jLabel17 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel7.setFont(new java.awt.Font("Garamond", 1, 18)); // NOI18N
         jLabel7.setText("Email Address");
@@ -149,9 +151,19 @@ public class Memberpage extends javax.swing.JInternalFrame {
         });
         jPanel2.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 400, 180, 50));
 
-        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/memberss.png"))); // NOI18N
-        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
+        jLabel17.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/weightlifter.png"))); // NOI18N
+        jPanel2.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 170, 150));
         jPanel2.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel3.setText("LOGIN NOW");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 410, -1, -1));
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -163,7 +175,7 @@ public class Memberpage extends javax.swing.JInternalFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 502, Short.MAX_VALUE)
         );
 
         pack();
@@ -190,9 +202,9 @@ public class Memberpage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_mempassActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-       String f_name = memberfn.getText();
-    String u_email = memberem.getText();
-    String u_phone = phone.getText();
+    String f_name = memberfn.getText().trim();
+    String u_email = memberem.getText().trim();
+    String u_phone = phone.getText().trim();
     String u_pass = new String(mempass.getPassword());
 
     // 1. Validation check
@@ -202,26 +214,27 @@ public class Memberpage extends javax.swing.JInternalFrame {
     }
 
     try {
-        config conf = new config(); // Use your config class instead of hardcoding the URL
-        Connection conn = conf.connectDB(); // This ensures the path is always right
+        config conf = new config(); 
+        Connection conn = conf.connectDB(); 
 
-        // 2. SQL String - Make sure these column names match your SQLite exactly!
+        // 2. SQL String
         String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pst = conn.prepareStatement(sql);
+
+        // 3. Hashing the password
+        // Use the method from your config class to keep it consistent with Login
+        String hashedPass = conf.hashPassword(u_pass); 
 
         pst.setString(1, f_name);
         pst.setString(2, u_email);
         pst.setString(3, u_phone);
-        
-        // 3. Use your hashing method here for security!
-        pst.setString(4, hashPassword(u_pass)); 
-        
+        pst.setString(4, hashedPass); // Hashed password goes here
         pst.setString(5, "Member");
 
         pst.executeUpdate();
         JOptionPane.showMessageDialog(this, "Member Successfully Registered!");
 
-        // 4. Clear the fields after success
+        // 4. Clear the fields
         memberfn.setText("");
         memberem.setText("");
         phone.setText("");
@@ -234,6 +247,12 @@ public class Memberpage extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
     }
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        login r = new login();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
 private String hashPassword(String password) {
     try {
         MessageDigest md = MessageDigest.getInstance("SHA-256");
@@ -258,6 +277,7 @@ private String hashPassword(String password) {
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

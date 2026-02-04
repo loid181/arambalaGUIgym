@@ -79,7 +79,7 @@ public class landing extends javax.swing.JFrame {
         });
         nav.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 340, -1, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/strong11.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/strong11.png"))); // NOI18N
         nav.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 20, -1, 140));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

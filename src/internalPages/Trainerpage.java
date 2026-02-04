@@ -5,11 +5,13 @@
  */
 package internalPages;
 
+import config.config;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import static sun.security.jgss.GSSUtil.login;
 
 /**
  *
@@ -57,12 +59,12 @@ public class Trainerpage extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
         passtrainer = new javax.swing.JPasswordField();
         phonetrainer1 = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         specialty = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -138,9 +140,8 @@ public class Trainerpage extends javax.swing.JInternalFrame {
         });
         jPanel4.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 440, 180, 50));
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/trainer.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trainer11.png"))); // NOI18N
         jPanel4.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
-        jPanel4.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 10, -1, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(170, 231, 37));
@@ -185,7 +186,17 @@ public class Trainerpage extends javax.swing.JInternalFrame {
         });
         jPanel4.add(specialty, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 310, 390, 50));
 
-        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jLabel3.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel3.setText("LOGIN NOW");
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+        jPanel4.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 450, -1, -1));
+
+        jPanel2.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 540));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -195,7 +206,7 @@ public class Trainerpage extends javax.swing.JInternalFrame {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 499, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -225,34 +236,36 @@ public class Trainerpage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_BioActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-String f_name = fullnametrainer.getText();
-    String u_email = emailtrainer.getText();
-    String u_phone = phonetrainer1.getText();
-    String u_bio = Bio.getText();
-    String u_spec = specialty.getText();
+String f_name = fullnametrainer.getText().trim();
+    String u_email = emailtrainer.getText().trim();
+    String u_phone = phonetrainer1.getText().trim();
+    String u_bio = Bio.getText().trim();
+    String u_spec = specialty.getText().trim();
     String u_pass = new String(passtrainer.getPassword());
 
+    // 1. Validation check
     if (f_name.isEmpty() || u_email.isEmpty() || u_pass.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
         return;
     }
 
     try {
-        String url = "jdbc:sqlite:C:/Users/PC/Documents/NetBeansProjects/Arambalagui/gymDB.db";
-        Connection conn = DriverManager.getConnection(url);
-        conn.setAutoCommit(false); // Start transaction
+        config conf = new config(); 
+        Connection conn = conf.connectDB(); // Using your config for the connection
+        conn.setAutoCommit(false); // Start transaction for multi-table insert
 
-        // STEP 1: Insert into users_tbl
+        // STEP 1: Insert into users_tbl (Hashing the password here)
         String sqlUser = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
         PreparedStatement pstUser = conn.prepareStatement(sqlUser, java.sql.Statement.RETURN_GENERATED_KEYS);
+        
         pstUser.setString(1, f_name);
         pstUser.setString(2, u_email);
         pstUser.setString(3, u_phone);
-        pstUser.setString(4, u_pass); // Consider hashing this!
+        pstUser.setString(4, conf.hashPassword(u_pass)); // CONSISTENT HASHING
         pstUser.setString(5, "Trainer");
         pstUser.executeUpdate();
 
-        // Retrieve the generated u_id
+        // Retrieve the generated u_id to link the trainer table
         java.sql.ResultSet rs = pstUser.getGeneratedKeys();
         int generatedId = 0;
         if (rs.next()) {
@@ -266,17 +279,26 @@ String f_name = fullnametrainer.getText();
         pstTrainer.setString(2, u_phone);
         pstTrainer.setString(3, u_bio);
         pstTrainer.setString(4, u_spec);
-        pstTrainer.setInt(5, generatedId); // Linking to users_tbl
+        pstTrainer.setInt(5, generatedId); 
         pstTrainer.executeUpdate();
 
-        conn.commit(); // Save both changes
-        JOptionPane.showMessageDialog(this, "Trainer Registered Successfullys!");
+        conn.commit(); // Save changes to both tables
+        JOptionPane.showMessageDialog(this, "Trainer Registered Successfully!");
 
-        // Clear fields...
+        // Clear fields
+        fullnametrainer.setText("");
+        emailtrainer.setText("");
+        phonetrainer1.setText("");
+        Bio.setText("");
+        specialty.setText("");
+        passtrainer.setText("");
+
+        pstUser.close();
+        pstTrainer.close();
         conn.close();
 
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
+        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
     }
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -292,6 +314,12 @@ String f_name = fullnametrainer.getText();
         // TODO add your handling code here:
     }//GEN-LAST:event_specialtyActionPerformed
 
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        login r = new login();
+        r.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel3MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Bio;
@@ -301,7 +329,7 @@ String f_name = fullnametrainer.getText();
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;

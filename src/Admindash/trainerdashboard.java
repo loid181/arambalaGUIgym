@@ -14,13 +14,10 @@ public class trainerdashboard extends javax.swing.JFrame {
     /**
      * Creates new form trainerdashboard
      */
-    public trainerdashboard() {
+    public trainerdashboard(String name) {
         initComponents();
     }
 
-    public trainerdashboard(String name) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -46,7 +43,7 @@ public class trainerdashboard extends javax.swing.JFrame {
         jPanel1.setPreferredSize(new java.awt.Dimension(910, 610));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/manageclass.png"))); // NOI18N
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manageclass.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
 
         jLabel9.setBackground(new java.awt.Color(51, 51, 51));
@@ -103,10 +100,8 @@ public class trainerdashboard extends javax.swing.JFrame {
         });
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/clients.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clients.png"))); // NOI18N
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
-
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/bag.png"))); // NOI18N
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 410, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(51, 51, 51));
@@ -141,6 +136,7 @@ public class trainerdashboard extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel9MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseClicked
@@ -219,11 +215,13 @@ public class trainerdashboard extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new trainerdashboard().setVisible(true);
-            }
-        });
+        /* Create and display the form */
+java.awt.EventQueue.invokeLater(new Runnable() {
+    public void run() {
+        // Change this line: add "null" or a default string inside the parentheses
+        new trainerdashboard("Default User").setVisible(true); 
+    }
+});
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

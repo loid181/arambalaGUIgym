@@ -169,8 +169,6 @@ public class login extends javax.swing.JFrame {
             }
         });
 
-        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/login12.png"))); // NOI18N
-
         javax.swing.GroupLayout headerLayout = new javax.swing.GroupLayout(header);
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
@@ -250,7 +248,7 @@ public class login extends javax.swing.JFrame {
         jLabel12.setText("AND");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 280, -1, -1));
 
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/loGo12.png"))); // NOI18N
+        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/loGo12.png"))); // NOI18N
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(-30, 0, 170, 130));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -285,8 +283,7 @@ public class login extends javax.swing.JFrame {
     }//GEN-LAST:event_jLabel10MouseClicked
 
     private void loginbuttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginbuttonActionPerformed
-// .trim() removes accidental spaces at the beginning or end
-    String email = em.getText().trim();
+String email = em.getText().trim();
     String password = ps.getText().trim();
 
     if (email.isEmpty() || password.isEmpty()) {
@@ -294,43 +291,40 @@ public class login extends javax.swing.JFrame {
         return;
     }
 
-    // Standard plain-text SQL query
-    String sql = "SELECT u_type, full_name FROM users_tbl WHERE email = ? AND password = ?";
+    // Use the hashing method from your config class
+    String hashedPass = config.hashPassword(password); 
 
+    // Query to find the user
+    String sql = "SELECT u_id, u_type, full_name FROM users_tbl WHERE email = ? AND password = ?";
+    
     try (Connection conn = config.connectDB(); 
          PreparedStatement pstmt = conn.prepareStatement(sql)) {
 
         pstmt.setString(1, email);
-        pstmt.setString(2, password);
+        pstmt.setString(2, hashedPass);
 
         try (ResultSet rs = pstmt.executeQuery()) {
             if (rs.next()) {
+                int id = rs.getInt("u_id");
                 String userType = rs.getString("u_type");
                 String name = rs.getString("full_name");
 
                 JOptionPane.showMessageDialog(null, "LOGIN SUCCESS! Welcome " + name);
 
-                // REDIRECTION LOGIC
-                // Using .trim() here too just in case the DB column has trailing spaces
-                if (userType.trim().equalsIgnoreCase("Admin")) {
-                    admindashboard ad = new admindashboard(name); 
-                    ad.setVisible(true);
-                    this.dispose();
-                } 
-                else if (userType.trim().equalsIgnoreCase("Trainer")) {
-                    trainerdashboard td = new trainerdashboard(name); 
-                    td.setVisible(true);
-                    this.dispose();
-                } 
-                else if (userType.trim().equalsIgnoreCase("Member")) {
-                    memberdashboard md = new memberdashboard(name); 
-                    md.setVisible(true);
-                    this.dispose();
-                } 
-                else {
-                    JOptionPane.showMessageDialog(null, "Account type '" + userType + "' not recognized.");
-                }
+                // Open the correct dashboard based on user type
+               if (userType.equalsIgnoreCase("Admin")) {
+    // Convert int to String using String.valueOf()
+    new admindashboard(String.valueOf(id)).setVisible(true); 
+    this.dispose(); 
+} else if (userType.equalsIgnoreCase("Trainer")) {
+    new trainerdashboard(String.valueOf(id)).setVisible(true);
+    this.dispose();
+} else if (userType.equalsIgnoreCase("Member")) {
+    new memberdashboard(String.valueOf(id)).setVisible(true);
+    this.dispose();
+}
                 
+                this.dispose(); // Close login window
             } else {
                 JOptionPane.showMessageDialog(null, "INVALID EMAIL OR PASSWORD!");
             }
