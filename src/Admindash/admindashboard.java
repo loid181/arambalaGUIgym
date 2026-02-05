@@ -25,7 +25,6 @@ private void displayUserInfo() {
     // Check if fullName is set to determine if logged in
     if (sess.getFullName() != null) {
     namead.setText("Name: " + sess.getFullName()); // Uses full_name from DB
-    phonead.setText("Phone: " + sess.getContact());
     gmailad.setText("Email: " + sess.getEmail());
     usertypead.setText("UserType: " + sess.getType());
 } else {
@@ -75,7 +74,6 @@ private void displayUserInfo() {
         jPanel6 = new javax.swing.JPanel();
         menu = new javax.swing.JDesktopPane();
         gmailad = new javax.swing.JLabel();
-        phonead = new javax.swing.JLabel();
         namead = new javax.swing.JLabel();
         usertypead = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
@@ -121,10 +119,10 @@ private void displayUserInfo() {
         adminname.setForeground(new java.awt.Color(51, 51, 51));
         adminname.setText("jLabel2");
         adminname.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 adminnameInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jPanel4.add(adminname, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 170, -1, -1));
@@ -133,10 +131,10 @@ private void displayUserInfo() {
         ad.setForeground(new java.awt.Color(51, 51, 51));
         ad.setText("User type: Admin");
         ad.addInputMethodListener(new java.awt.event.InputMethodListener() {
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
-            }
             public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt) {
                 adInputMethodTextChanged(evt);
+            }
+            public void caretPositionChanged(java.awt.event.InputMethodEvent evt) {
             }
         });
         jPanel4.add(ad, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, -1, -1));
@@ -256,12 +254,6 @@ private void displayUserInfo() {
         gmailad.setText("gmail:");
         jPanel1.add(gmailad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
 
-        phonead.setBackground(new java.awt.Color(170, 231, 37));
-        phonead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
-        phonead.setForeground(new java.awt.Color(170, 231, 37));
-        phonead.setText("Phone:");
-        jPanel1.add(phonead, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 40, -1, -1));
-
         namead.setBackground(new java.awt.Color(170, 231, 37));
         namead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         namead.setForeground(new java.awt.Color(170, 231, 37));
@@ -272,7 +264,7 @@ private void displayUserInfo() {
         usertypead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         usertypead.setForeground(new java.awt.Color(170, 231, 37));
         usertypead.setText("UserType:");
-        jPanel1.add(usertypead, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 40, -1, -1));
+        jPanel1.add(usertypead, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/profile1.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
@@ -352,7 +344,6 @@ private void displayUserInfo() {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JDesktopPane menu;
     private javax.swing.JLabel namead;
-    private javax.swing.JLabel phonead;
     private javax.swing.JTable userst;
     private javax.swing.JLabel usertypead;
     private javax.swing.JLabel viewUsers;
