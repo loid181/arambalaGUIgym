@@ -62,7 +62,7 @@
               <Color blue="25" green="e7" red="aa" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="3.        Enroll in a Class"/>
+            <Property name="text" type="java.lang.String" value="2.        Enroll in a Class"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel10MouseClicked"/>
@@ -87,7 +87,7 @@
               <Color blue="25" green="e7" red="aa" type="rgb"/>
             </Property>
             <Property name="horizontalAlignment" type="int" value="0"/>
-            <Property name="text" type="java.lang.String" value="2.        View Available Classes"/>
+            <Property name="text" type="java.lang.String" value="1.        View Available Classes"/>
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jLabel11MouseClicked"/>

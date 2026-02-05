@@ -82,7 +82,7 @@ public class memberdashboard extends javax.swing.JFrame {
         jLabel10.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
         jLabel10.setForeground(new java.awt.Color(170, 231, 37));
         jLabel10.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel10.setText("3.        Enroll in a Class");
+        jLabel10.setText("2.        Enroll in a Class");
         jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel10MouseClicked(evt);
@@ -100,7 +100,7 @@ public class memberdashboard extends javax.swing.JFrame {
         jLabel11.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(170, 231, 37));
         jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("2.        View Available Classes");
+        jLabel11.setText("1.        View Available Classes");
         jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jLabel11MouseClicked(evt);

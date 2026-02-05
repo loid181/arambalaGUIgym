@@ -14,44 +14,50 @@ import javax.swing.JOptionPane;
 public class trainerdashboard extends javax.swing.JFrame {
 
    public trainerdashboard(String name) {
-        // 1. Manually initialize the labels because they are missing from your locked block
-        namemem = new javax.swing.JLabel();
-        gmailtrainer = new javax.swing.JLabel();
-        usertypetrainer = new javax.swing.JLabel();
-        
-        initComponents();
-        
-        // 2. Add them to the panel so they actually show up
-        jPanel1.add(namemem, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 60, 300, 20));
-        jPanel1.add(gmailtrainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 85, 300, 20));
-        jPanel1.add(usertypetrainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 110, 300, 20));
-        
-        displayUserInfo(); 
-    }
+    // 1. Initialize all components (NetBeans handles the labels now)
+    initComponents();
+    
+    // 2. Load the data into those labels
+    displayUserInfo(); 
+}
 private void displayUserInfo() {
-        UserSession sess = UserSession.getInstance();
-        if (sess != null && sess.getFullName() != null) {
-            namemem.setText("Name: " + sess.getFullName());
-            gmailtrainer.setText("Email: " + sess.getEmail());
-            usertypetrainer.setText("UserType: " + sess.getType());
-        } else {
-            namemem.setText("Name: Guest");
-            gmailtrainer.setText("Email: N/A");
-            usertypetrainer.setText("UserType: N/A");
-        }
+    UserSession sess = UserSession.getInstance();
+    // Check if the session actually has data
+    if (sess != null && sess.getFullName() != null) {
+        nametrainer.setText("Name: " + sess.getFullName());
+        gmailtrainer.setText("Email: " + sess.getEmail());
+        usertypetrainer.setText("UserType: " + sess.getType());
+    } else {
+        nametrainer.setText("Name: Guest");
+        gmailtrainer.setText("Email: N/A");
+        usertypetrainer.setText("UserType: N/A");
     }
+}
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel14 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        nametrainer = new javax.swing.JLabel();
+        gmailtrainer = new javax.swing.JLabel();
+        usertypetrainer = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+
+        jLabel14.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel14.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
+        jLabel14.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel14.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel14.setText("1.        View Available Classes");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -61,42 +67,6 @@ private void displayUserInfo() {
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/manageclass.png"))); // NOI18N
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 190, -1, -1));
-
-        jLabel9.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel9.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel9.setText("Trainer's Menu");
-        jLabel9.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel9MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel9MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel9MouseExited(evt);
-            }
-        });
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 0, -1, -1));
-
-        jLabel11.setBackground(new java.awt.Color(51, 51, 51));
-        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel11.setText("2.        View Class Roster(Enrolled Clients)");
-        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jLabel11MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                jLabel11MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                jLabel11MouseExited(evt);
-            }
-        });
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 300, -1, -1));
 
         jLabel12.setBackground(new java.awt.Color(51, 51, 51));
         jLabel12.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
@@ -115,9 +85,6 @@ private void displayUserInfo() {
             }
         });
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
-
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clients.png"))); // NOI18N
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 290, -1, -1));
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 410, -1, -1));
 
         jLabel13.setBackground(new java.awt.Color(51, 51, 51));
@@ -137,6 +104,73 @@ private void displayUserInfo() {
             }
         });
         jPanel1.add(jLabel13, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(39, 41, 46));
+        jPanel2.setPreferredSize(new java.awt.Dimension(910, 610));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel15.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel15.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
+        jLabel15.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel15.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel15.setText("Log out");
+        jLabel15.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel15MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel15MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel15MouseExited(evt);
+            }
+        });
+        jPanel2.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 560, -1, -1));
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 440, -1, -1));
+
+        jLabel7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/profile1.png"))); // NOI18N
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, -1));
+
+        nametrainer.setBackground(new java.awt.Color(170, 231, 37));
+        nametrainer.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        nametrainer.setForeground(new java.awt.Color(170, 231, 37));
+        nametrainer.setText("Name:");
+        jPanel2.add(nametrainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 10, 250, -1));
+
+        gmailtrainer.setBackground(new java.awt.Color(170, 231, 37));
+        gmailtrainer.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        gmailtrainer.setForeground(new java.awt.Color(170, 231, 37));
+        gmailtrainer.setText("gmail:");
+        jPanel2.add(gmailtrainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 10, 240, -1));
+
+        usertypetrainer.setBackground(new java.awt.Color(170, 231, 37));
+        usertypetrainer.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
+        usertypetrainer.setForeground(new java.awt.Color(170, 231, 37));
+        usertypetrainer.setText("UserType:");
+        jPanel2.add(usertypetrainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 40, 180, -1));
+
+        jLabel11.setBackground(new java.awt.Color(51, 51, 51));
+        jLabel11.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel11.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel11.setText("2.        View Class Roster(Enrolled Clients)");
+        jLabel11.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel11MouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                jLabel11MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                jLabel11MouseExited(evt);
+            }
+        });
+        jPanel2.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, -1, -1));
+
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/clients.png"))); // NOI18N
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 300, -1, -1));
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -219,6 +253,7 @@ private void displayUserInfo() {
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
@@ -226,7 +261,7 @@ private void displayUserInfo() {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JLabel namemem;
+    private javax.swing.JLabel nametrainer;
     private javax.swing.JLabel usertypetrainer;
     // End of variables declaration//GEN-END:variables
 }
