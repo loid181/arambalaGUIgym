@@ -11,6 +11,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import main.login;
 import static sun.security.jgss.GSSUtil.login;
 
 /**

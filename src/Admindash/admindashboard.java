@@ -8,6 +8,8 @@ package Admindash;
 
 
 import adminmenu.*;
+import config.UserSession;
+import main.landing;
 
 
 
@@ -77,6 +79,7 @@ private void displayUserInfo() {
         namead = new javax.swing.JLabel();
         usertypead = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        logout = new javax.swing.JLabel();
 
         userst.setBackground(new java.awt.Color(0, 0, 0));
         userst.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
@@ -252,22 +255,40 @@ private void displayUserInfo() {
         gmailad.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         gmailad.setForeground(new java.awt.Color(170, 231, 37));
         gmailad.setText("gmail:");
-        jPanel1.add(gmailad, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 10, -1, -1));
+        jPanel1.add(gmailad, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 10, 210, -1));
 
         namead.setBackground(new java.awt.Color(170, 231, 37));
         namead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         namead.setForeground(new java.awt.Color(170, 231, 37));
         namead.setText("Name:");
-        jPanel1.add(namead, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 10, -1, -1));
+        jPanel1.add(namead, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 10, 160, -1));
 
         usertypead.setBackground(new java.awt.Color(170, 231, 37));
         usertypead.setFont(new java.awt.Font("Segoe UI Black", 2, 18)); // NOI18N
         usertypead.setForeground(new java.awt.Color(170, 231, 37));
         usertypead.setText("UserType:");
-        jPanel1.add(usertypead, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 50, -1, -1));
+        jPanel1.add(usertypead, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 40, 480, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/profile1.png"))); // NOI18N
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 10, -1, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 10, -1, -1));
+
+        logout.setBackground(new java.awt.Color(51, 51, 51));
+        logout.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
+        logout.setForeground(new java.awt.Color(170, 231, 37));
+        logout.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        logout.setText("Log out");
+        logout.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                logoutMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                logoutMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                logoutMouseExited(evt);
+            }
+        });
+        jPanel1.add(logout, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 20, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -310,6 +331,31 @@ private void displayUserInfo() {
         menu.add(up).setVisible(true);
     }//GEN-LAST:event_jLabel5MouseClicked
 
+    private void logoutMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseClicked
+        // 1. (Optional) Clear the user session if you want to be secure
+        UserSession.getInstance().setFullName(null);
+        UserSession.getInstance().setEmail(null);
+        UserSession.getInstance().setType(null);
+
+        // 2. Open the landing page
+        // Replace 'landingpage' with the actual name of your landing page class
+        landing land = new landing();
+        land.setVisible(true);
+
+        // 3. Close the current dashboard
+        this.dispose();
+    }//GEN-LAST:event_logoutMouseClicked
+
+    private void logoutMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseEntered
+        // TODO add your handling code here:
+        logout.setForeground(java.awt.Color.RED);
+    }//GEN-LAST:event_logoutMouseEntered
+
+    private void logoutMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_logoutMouseExited
+        // TODO add your handling code here:
+        logout.setForeground(new java.awt.Color(170, 231, 37));
+    }//GEN-LAST:event_logoutMouseExited
+
    
     
  public static void main(String args[]) {
@@ -342,6 +388,7 @@ private void displayUserInfo() {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel logout;
     private javax.swing.JDesktopPane menu;
     private javax.swing.JLabel namead;
     private javax.swing.JTable userst;

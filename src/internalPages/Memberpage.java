@@ -12,6 +12,7 @@ import java.security.MessageDigest;
 import java.nio.charset.StandardCharsets;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import main.login;
 import static sun.security.jgss.GSSUtil.login;
 
 public class Memberpage extends javax.swing.JInternalFrame {

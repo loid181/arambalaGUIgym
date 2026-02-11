@@ -10,6 +10,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+import main.login;
 
 import static sun.security.jgss.GSSUtil.login;
 /**
@@ -18,21 +19,16 @@ import static sun.security.jgss.GSSUtil.login;
  */
 public class Adminpage extends javax.swing.JInternalFrame {
 
-    /**
-     * Creates 
-     */
  public Adminpage() {
-    initComponents();
-    
-    // 1. Set the background of the frame's container
-    this.getContentPane().setBackground(new java.awt.Color(33, 37, 41));
-    
-    // 2. Set the background of jPanel2 (the main container)
-    jPanel2.setBackground(new java.awt.Color(33, 37, 41));
-    
-    // 3. Remove the border of the internal frame to make it blend in
-    this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
-    ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null); 
+        initComponents();
+        
+        // Background and UI styling
+        this.getContentPane().setBackground(new java.awt.Color(33, 37, 41));
+        jPanel2.setBackground(new java.awt.Color(33, 37, 41));
+        
+        // Remove borders for seamless integration
+        this.setBorder(javax.swing.BorderFactory.createEmptyBorder(0, 0, 0, 0));
+        ((javax.swing.plaf.basic.BasicInternalFrameUI)this.getUI()).setNorthPane(null);
 }
 
     
@@ -179,48 +175,57 @@ public class Adminpage extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_passActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-       String f_name = fullname.getText();
-    String u_email = email.getText();
-    String u_phone = phone.getText();
-    String u_pass = new String(pass.getPassword()); 
+    String f_name = fullname.getText().trim();
+        String u_email = email.getText().trim();
+        String u_phone = phone.getText().trim();
+        String u_pass = new String(pass.getPassword());
 
-    if (f_name.isEmpty() || u_email.isEmpty() || u_pass.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
-        return;
-    }
+        // 1. Validation check
+        if (f_name.isEmpty() || u_email.isEmpty() || u_pass.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Please fill in all required fields!");
+            return;
+        }
 
-    try {
-        // 1. HASH THE PASSWORD HERE
-        // Assuming the method is in your 'config' class. 
-        // If it's in a different class, change 'config' to that class name.
-        String hashedPass = config.hashPassword(u_pass);
+        try {
+            // Use the config class instead of hardcoded DriverManager
+            config conf = new config(); 
+            Connection conn = conf.connectDB(); 
 
-        String url = "jdbc:sqlite:C:/Users/PC/Documents/NetBeansProjects/Arambalagui/gymDB.db";
-        Connection conn = DriverManager.getConnection(url);
+            if (conn == null) {
+                JOptionPane.showMessageDialog(this, "Connection Failed! Check your database path in config.java");
+                return;
+            }
 
-        String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
-        PreparedStatement pst = conn.prepareStatement(sql);
-        
-        pst.setString(1, f_name);
-        pst.setString(2, u_email);
-        pst.setString(3, u_phone);
-        pst.setString(4, hashedPass); // <--- Use the hashed version here
-        pst.setString(5, "Admin"); 
+            // SQL Statement for Admin registration
+            String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type) VALUES (?, ?, ?, ?, ?)";
+            PreparedStatement pst = conn.prepareStatement(sql);
+            
+            pst.setString(1, f_name);
+            pst.setString(2, u_email);
+            pst.setString(3, u_phone);
+            
+            // Use the hashing method from your config class
+            pst.setString(4, conf.hashPassword(u_pass)); 
+            pst.setString(5, "Admin"); 
 
-        pst.executeUpdate();
-        JOptionPane.showMessageDialog(this, "Successfully Registered as Admin!");
-        
-        // Clear fields
-        fullname.setText("");
-        email.setText("");
-        phone.setText("");
-        pass.setText("");
-        
-        conn.close();
+            int rowsAffected = pst.executeUpdate();
+            
+            if (rowsAffected > 0) {
+                JOptionPane.showMessageDialog(this, "Admin Registered Successfully!");
+                
+                // Clear fields after success
+                fullname.setText("");
+                email.setText("");
+                phone.setText("");
+                pass.setText("");
+            }
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
-    }
+            pst.close();
+            conn.close();
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Database Error: " + e.getMessage());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
