@@ -6,6 +6,8 @@
 package adminmenu;
 
 import config.config;
+import javax.swing.JOptionPane;
+import javax.swing.table.TableModel;
 
 /**
  *
@@ -16,7 +18,9 @@ public class ViewUsers extends javax.swing.JInternalFrame {
     /**
      * Creates new form ViewUser
      */
+    
     public ViewUsers() {
+        
         initComponents();
         displayUser();
         jScrollPane1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_NEVER);
@@ -63,14 +67,29 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
         return this;
     }
 });
-    }
-    void displayUser()
-    {
-        config con = new config();
-        String sql = "SELECT * FROM users_tbl";
-        con.displayData(sql, userst);
-    }
 
+
+
+
+    }
+    public void searchUser() {
+    config con = new config();
+    String txt = search.getText();
+    
+    // This query searches for the text anywhere in full_name, email, or u_id
+    String sql = "SELECT u_id, full_name, email, phonenumber, u_type, U_status FROM users_tbl "
+               + "WHERE full_name LIKE '%" + txt + "%' "
+               + "OR email LIKE '%" + txt + "%' "
+               + "OR u_id LIKE '%" + txt + "%'";
+               
+    con.displayData(sql, userst);
+}
+   void displayUser() {
+    config con = new config();
+    // Explicitly list all columns except 'password'
+    String sql = "SELECT u_id, full_name, email, phonenumber, u_type, U_status FROM users_tbl"; 
+    con.displayData(sql, userst);
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,13 +100,34 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        DELETE = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         userst = new javax.swing.JTable();
+        ADD = new javax.swing.JLabel();
+        EDIT = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
+        search = new javax.swing.JTextField();
 
         jPanel1.setBackground(new java.awt.Color(39, 41, 46));
-        jPanel1.setPreferredSize(new java.awt.Dimension(686, 514));
+        jPanel1.setPreferredSize(new java.awt.Dimension(718, 514));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        DELETE.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        DELETE.setForeground(new java.awt.Color(255, 255, 255));
+        DELETE.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/trash1.png"))); // NOI18N
+        DELETE.setText("DELETE");
+        DELETE.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                DELETEMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                DELETEMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                DELETEMouseExited(evt);
+            }
+        });
+        jPanel1.add(DELETE, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, -1, -1));
 
         userst.setBackground(new java.awt.Color(39, 41, 46));
         userst.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
@@ -107,36 +147,209 @@ userst.getTableHeader().setDefaultRenderer(new javax.swing.table.DefaultTableCel
         userst.setSelectionForeground(new java.awt.Color(204, 204, 204));
         jScrollPane1.setViewportView(userst);
 
-        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 690, 470));
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 690, 420));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI Black", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel1.setText("USERS TABLE");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 0, -1, -1));
+        ADD.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        ADD.setForeground(new java.awt.Color(255, 255, 255));
+        ADD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus1.png"))); // NOI18N
+        ADD.setText("ADD");
+        ADD.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                ADDMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                ADDMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                ADDMouseExited(evt);
+            }
+        });
+        jPanel1.add(ADD, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, -1, -1));
+
+        EDIT.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        EDIT.setForeground(new java.awt.Color(255, 255, 255));
+        EDIT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/edit1.png"))); // NOI18N
+        EDIT.setText("EDIT");
+        EDIT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                EDITMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                EDITMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                EDITMouseExited(evt);
+            }
+        });
+        jPanel1.add(EDIT, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 30, -1, -1));
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/SER.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 30, 40, 40));
+
+        search.setBackground(new java.awt.Color(51, 51, 51));
+        search.setForeground(new java.awt.Color(170, 231, 37));
+        search.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(170, 231, 37), 3, true));
+        search.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                searchKeyReleased(evt);
+            }
+        });
+        jPanel1.add(search, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 30, 250, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 108, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void ADDMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDMouseEntered
+       ADD.setForeground(new java.awt.Color(170, 231, 37));
+    }//GEN-LAST:event_ADDMouseEntered
+
+    private void ADDMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDMouseExited
+        ADD.setForeground(new java.awt.Color(255, 255, 255)); // White
+    }//GEN-LAST:event_ADDMouseExited
+
+    private void EDITMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EDITMouseClicked
+ int rowIndex = userst.getSelectedRow();
+
+        // 1. Check if a row is selected
+        if (rowIndex < 0) {
+            javax.swing.JOptionPane.showMessageDialog(null, "Please select a user to edit!");
+        } else {
+            try {
+                TableModel model = userst.getModel();
+
+                // 2. Extract all 6 columns from the table
+                // Column 0: ID, 1: Name, 2: Email, 3: Phone, 4: Type, 5: Status
+                String id = model.getValueAt(rowIndex, 0).toString();
+                String name = model.getValueAt(rowIndex, 1).toString();
+                String email = model.getValueAt(rowIndex, 2).toString();
+                String phone = model.getValueAt(rowIndex, 3).toString();
+                String type = model.getValueAt(rowIndex, 4).toString();   // The missing Type
+                String status = model.getValueAt(rowIndex, 5).toString(); // The Status
+
+                // 3. Create the editPage with all 6 arguments
+                edit editPage = new edit(id, name, email, phone, type, status);
+
+                // 4. Switch the UI Panels
+                javax.swing.JComponent container = (javax.swing.JComponent) this.getParent();
+                container.removeAll();
+
+                editPage.setSize(container.getWidth(), container.getHeight());
+                editPage.setLocation(0, 0);
+
+                container.add(editPage);
+                container.revalidate();
+                container.repaint();
+
+            } catch (Exception e) {
+                System.out.println("Selection Error: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_EDITMouseClicked
+
+    private void EDITMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EDITMouseEntered
+       EDIT.setForeground(new java.awt.Color(170, 231, 37));
+    }//GEN-LAST:event_EDITMouseEntered
+
+    private void EDITMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EDITMouseExited
+        EDIT.setForeground(new java.awt.Color(255, 255, 255)); // White
+    }//GEN-LAST:event_EDITMouseExited
+
+    private void DELETEMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseEntered
+        DELETE.setForeground(new java.awt.Color(170, 231, 37)); // Neon Green
+    }//GEN-LAST:event_DELETEMouseEntered
+
+    private void DELETEMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseExited
+       DELETE.setForeground(new java.awt.Color(255, 255, 255)); // White
+    }//GEN-LAST:event_DELETEMouseExited
+
+    private void ADDMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ADDMouseClicked
+    // 1. Create the instance
+    add1 addPage = new add1();
+    
+    // 2. Get the container (this is usually the JPanel on your admindashboard)
+    javax.swing.JComponent container = (javax.swing.JComponent) this.getParent();
+    
+    // 3. Clear the area
+    container.removeAll();
+    
+    // 4. IMPORTANT: Give the panel a size so it's visible
+    // Matches your setPreferredSize(new java.awt.Dimension(718, 514))
+    addPage.setSize(container.getWidth(), container.getHeight());
+    addPage.setLocation(0, 0);
+    
+    // 5. Add and Refresh
+    container.add(addPage);
+    container.revalidate();
+    container.repaint();
+    }//GEN-LAST:event_ADDMouseClicked
+
+    private void searchKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_searchKeyReleased
+        searchUser();
+    }//GEN-LAST:event_searchKeyReleased
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+       searchUser();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void DELETEMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_DELETEMouseClicked
+int rowIndex = userst.getSelectedRow();
+
+    // 1. Check if a row is selected
+    if (rowIndex < 0) {
+        javax.swing.JOptionPane.showMessageDialog(null, "Please select a user to delete!");
+    } else {
+        TableModel model = userst.getModel();
+        // Get the ID (Column 0) and Name (Column 1) for the confirmation message
+        String id = model.getValueAt(rowIndex, 0).toString();
+        String name = model.getValueAt(rowIndex, 1).toString();
+
+        // 2. Confirmation Dialog to prevent accidental clicks
+        int response = javax.swing.JOptionPane.showConfirmDialog(null, 
+                "Are you sure you want to delete user: " + name + "?", 
+                "Confirm Deletion", javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (response == javax.swing.JOptionPane.YES_OPTION) {
+            config con = new config();
+            
+            // 3. Delete from tbl_trainers first (to handle foreign key constraints)
+            con.deleteRecord("DELETE FROM tbl_trainers WHERE u_id = '" + id + "'");
+            
+            // 4. Delete from the main users_tbl
+            con.deleteRecord("DELETE FROM users_tbl WHERE u_id = '" + id + "'");
+
+            javax.swing.JOptionPane.showMessageDialog(null, "User " + name + " has been deleted.");
+            
+            // 5. Refresh the table automatically
+            displayUser(); 
+        }
+    }        // TODO add your handling code here:
+    }//GEN-LAST:event_DELETEMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel ADD;
+    private javax.swing.JLabel DELETE;
+    private javax.swing.JLabel EDIT;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField search;
     private javax.swing.JTable userst;
     // End of variables declaration//GEN-END:variables
 }

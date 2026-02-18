@@ -4,18 +4,18 @@
  * and open the template in the editor.
  */
 package main;
-import internalPages.Adminpage;
+import config.config;
 import java.awt.Color;
-import internalPages.Memberpage;
-import internalPages.Trainerpage;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
 
 public class register extends javax.swing.JFrame {
 
  
     public register() {
         initComponents();
-        desktopInstance.setBackground(new java.awt.Color(50, 50, 50)); // Your choice of color
-desktopInstance.setOpaque(true);
+      
     }
     Color navcolor = new Color(51,51,51);
     Color headcolor = new Color(51,0,0);
@@ -34,21 +34,18 @@ desktopInstance.setOpaque(true);
         jTextField4 = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         body = new javax.swing.JPanel();
-        header = new javax.swing.JPanel();
-        trainer = new javax.swing.JLabel();
-        admins = new javax.swing.JLabel();
-        members = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
-        desktopInstance = new javax.swing.JDesktopPane() {
-            @Override
-            protected void paintComponent(java.awt.Graphics g) {
-                super.paintComponent(g);
-                // Use the RGB values from your sidebar to make it match
-                g.setColor(new java.awt.Color(39,41,46)); 
-                g.fillRect(0, 0, getWidth(), getHeight());
-            }
-        };
-        admins1 = new javax.swing.JLabel();
+        jPanel2 = new javax.swing.JPanel();
+        fullname = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        email = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        phone = new javax.swing.JTextField();
+        pass = new javax.swing.JPasswordField();
+        jButton1 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
 
         jTextField4.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
         jTextField4.addActionListener(new java.awt.event.ActionListener() {
@@ -62,105 +59,75 @@ desktopInstance.setOpaque(true);
         body.setBackground(new java.awt.Color(204, 204, 204));
         body.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        header.setBackground(new java.awt.Color(39, 41, 46));
-        header.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel2.setBackground(new java.awt.Color(39, 41, 46));
+        jPanel2.setPreferredSize(new java.awt.Dimension(800, 500));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        trainer.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        trainer.setForeground(new java.awt.Color(170, 231, 37));
-        trainer.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        trainer.setText("Trainer");
-        trainer.addMouseListener(new java.awt.event.MouseAdapter() {
+        fullname.setBackground(new java.awt.Color(39, 41, 46));
+        fullname.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        fullname.setForeground(new java.awt.Color(255, 255, 255));
+        fullname.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel2.add(fullname, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 190, 390, 50));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel6.setText("Email Address:");
+        jPanel2.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 280, -1, -1));
+
+        email.setBackground(new java.awt.Color(39, 41, 46));
+        email.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        email.setForeground(new java.awt.Color(255, 255, 255));
+        email.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel2.add(email, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 260, 390, 50));
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel8.setText("Phone number:");
+        jPanel2.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 350, -1, -1));
+
+        phone.setBackground(new java.awt.Color(39, 41, 46));
+        phone.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        phone.setForeground(new java.awt.Color(255, 255, 255));
+        phone.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel2.add(phone, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 330, 390, 50));
+
+        pass.setBackground(new java.awt.Color(39, 41, 46));
+        pass.setFont(new java.awt.Font("Segoe UI Black", 1, 14)); // NOI18N
+        pass.setForeground(new java.awt.Color(255, 255, 255));
+        pass.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jPanel2.add(pass, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 400, 390, 50));
+
+        jButton1.setBackground(new java.awt.Color(170, 231, 37));
+        jButton1.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
+        jButton1.setForeground(new java.awt.Color(39, 41, 46));
+        jButton1.setText("Register");
+        jButton1.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 3, true));
+        jButton1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                trainerMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                trainerMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                trainerMouseExited(evt);
+                jButton1MouseClicked(evt);
             }
         });
-        header.add(trainer, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 40, 170, -1));
+        jPanel2.add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 500, 180, 50));
 
-        admins.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        admins.setForeground(new java.awt.Color(170, 231, 37));
-        admins.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        admins.setText("Admin");
-        admins.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                adminsMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                adminsMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                adminsMouseExited(evt);
-            }
-        });
-        header.add(admins, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 40, 170, -1));
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/admin.png"))); // NOI18N
+        jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, -1, -1));
 
-        members.setBackground(new java.awt.Color(51, 51, 51));
-        members.setFont(new java.awt.Font("Segoe UI Black", 3, 36)); // NOI18N
-        members.setForeground(new java.awt.Color(170, 231, 37));
-        members.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        members.setText("Member");
-        members.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                membersMouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                membersMouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                membersMouseExited(evt);
-            }
-        });
-        header.add(members, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 170, -1));
+        jLabel7.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel7.setText("Full name:");
+        jPanel2.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 210, -1, -1));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI Black", 1, 18)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(170, 231, 37));
-        jLabel2.setText("Select a User type");
-        header.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 0, 180, -1));
+        jLabel4.setFont(new java.awt.Font("Segoe UI Black", 3, 24)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel4.setText("LOGIN NOW");
+        jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 510, -1, -1));
 
-        body.add(header, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 90));
+        jLabel10.setFont(new java.awt.Font("Segoe UI Black", 1, 24)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(170, 231, 37));
+        jLabel10.setText("Password:");
+        jPanel2.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 420, -1, -1));
 
-        desktopInstance.setBackground(new java.awt.Color(39, 41, 46));
-
-        admins1.setFont(new java.awt.Font("Segoe UI Black", 3, 18)); // NOI18N
-        admins1.setForeground(new java.awt.Color(170, 231, 37));
-        admins1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        admins1.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                admins1MouseClicked(evt);
-            }
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                admins1MouseEntered(evt);
-            }
-            public void mouseExited(java.awt.event.MouseEvent evt) {
-                admins1MouseExited(evt);
-            }
-        });
-
-        desktopInstance.setLayer(admins1, javax.swing.JLayeredPane.DEFAULT_LAYER);
-
-        javax.swing.GroupLayout desktopInstanceLayout = new javax.swing.GroupLayout(desktopInstance);
-        desktopInstance.setLayout(desktopInstanceLayout);
-        desktopInstanceLayout.setHorizontalGroup(
-            desktopInstanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(desktopInstanceLayout.createSequentialGroup()
-                .addGap(326, 326, 326)
-                .addComponent(admins1)
-                .addContainerGap(474, Short.MAX_VALUE))
-        );
-        desktopInstanceLayout.setVerticalGroup(
-            desktopInstanceLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, desktopInstanceLayout.createSequentialGroup()
-                .addContainerGap(313, Short.MAX_VALUE)
-                .addComponent(admins1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(149, 149, 149))
-        );
-
-        body.add(desktopInstance, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 90, 800, 500));
+        body.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -183,57 +150,32 @@ desktopInstance.setOpaque(true);
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField4ActionPerformed
 
-    private void trainerMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trainerMouseEntered
-       trainer.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_trainerMouseEntered
+    private void jButton1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jButton1MouseClicked
+     config conf = new config();
+    
+    String f_name = fullname.getText();
+    String u_email = email.getText();
+    String u_phone = phone.getText();
+    String raw_pass = pass.getText();
 
-    private void trainerMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trainerMouseExited
-        trainer.setForeground(new java.awt.Color(170,231,37));
-    }//GEN-LAST:event_trainerMouseExited
+    if(f_name.isEmpty() || u_email.isEmpty() || u_phone.isEmpty() || raw_pass.isEmpty()){
+        JOptionPane.showMessageDialog(null, "All fields are required!");
+    } else if(raw_pass.length() < 8){
+        JOptionPane.showMessageDialog(null, "Password must be at least 8 characters!");
+    } else if(conf.isEmailTaken(u_email)) { // <--- DUPLICATE EMAIL CHECK
+        JOptionPane.showMessageDialog(null, "Email is already taken!");
+    } else {
+        String hashed_pass = config.hashPassword(raw_pass);
+        String sql = "INSERT INTO users_tbl (full_name, email, phonenumber, password, u_type, U_status) "
+                   + "VALUES (?, ?, ?, ?, 'Unassigned', 'Pending')";
 
-    private void trainerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_trainerMouseClicked
-      Trainerpage up = new Trainerpage();
-        desktopInstance.add(up).setVisible(true);
-    }//GEN-LAST:event_trainerMouseClicked
-
-    private void adminsMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminsMouseExited
-        admins.setForeground(new java.awt.Color(170,231,37));
-    }//GEN-LAST:event_adminsMouseExited
-
-    private void adminsMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminsMouseEntered
-        admins.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_adminsMouseEntered
-
-    private void adminsMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_adminsMouseClicked
-        desktopInstance.removeAll();
-        Adminpage admin = new Adminpage();
-        desktopInstance.add(admin).setVisible(true);
-    }//GEN-LAST:event_adminsMouseClicked
-
-    private void membersMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseExited
-        members.setForeground(new java.awt.Color(170,231,37));
-    }//GEN-LAST:event_membersMouseExited
-
-    private void membersMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseEntered
-        members.setForeground(new java.awt.Color(255,255,255));
-    }//GEN-LAST:event_membersMouseEntered
-
-    private void membersMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_membersMouseClicked
-        Memberpage up = new Memberpage();
-        desktopInstance.add(up).setVisible(true);
-    }//GEN-LAST:event_membersMouseClicked
-
-    private void admins1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_admins1MouseClicked
-
-    private void admins1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseEntered
-        // TODO add your handling code here:
-    }//GEN-LAST:event_admins1MouseEntered
-
-    private void admins1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_admins1MouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_admins1MouseExited
+        conf.addRecord(sql, f_name, u_email, u_phone, hashed_pass);
+        
+        JOptionPane.showMessageDialog(null, "Registered Successfully!\nPlease wait for Admin approval.");
+        new login().setVisible(true);
+        this.dispose();
+    }
+    }//GEN-LAST:event_jButton1MouseClicked
 
     /**
      * @param args the command line arguments
@@ -271,15 +213,20 @@ desktopInstance.setOpaque(true);
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel admins;
-    private javax.swing.JLabel admins1;
     private javax.swing.JPanel body;
-    private javax.swing.JDesktopPane desktopInstance;
-    private javax.swing.JPanel header;
+    private javax.swing.JTextField email;
+    private javax.swing.JTextField fullname;
+    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JPanel jPanel2;
     private javax.swing.JTextField jTextField4;
-    private javax.swing.JLabel members;
-    private javax.swing.JLabel trainer;
+    private javax.swing.JPasswordField pass;
+    private javax.swing.JTextField phone;
     // End of variables declaration//GEN-END:variables
 }

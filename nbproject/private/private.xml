@@ -5,17 +5,23 @@
         <group>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/main/login.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/main/register.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/internalPages/Memberpage.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/trainerDASHBOARD/editprofiletrainer.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/adminmenu/addclass.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/memberDASHBOARD/enrollclass.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/config/UserSession.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/Admindash/trainerdashboard.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/internalPages/Adminpage.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/memberDASHBOARD/editprofile.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/trainermenu/addclass.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/memberDASHBOARD/viewclasses.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/adminmenu/add1.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/DASHBOARDS/memberdashboard.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/adminmenu/edit.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/DASHBOARDS/trainerdashboard.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/main/landing.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/adminmenu/ViewUsers.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/config/config.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/Admindash/memberdashboard.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/internalPages/Trainerpage.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/trainermenu/manageclasses.java</file>
+            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/DASHBOARDS/admindashboard.java</file>
             <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/config/Session.java</file>
-            <file>file:/C:/Users/PC/Documents/NetBeansProjects/Arambalagui/src/Admindash/admindashboard.java</file>
         </group>
     </open-files>
 </project-private>

@@ -1,7 +1,7 @@
 package main;
-import Admindash.admindashboard;
-import Admindash.memberdashboard;
-import Admindash.trainerdashboard;
+import DASHBOARDS.admindashboard;
+import DASHBOARDS.memberdashboard;
+import DASHBOARDS.trainerdashboard;
 import config.config;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -167,6 +167,16 @@ public class login extends javax.swing.JFrame {
         header.setLayout(headerLayout);
         headerLayout.setHorizontalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(headerLayout.createSequentialGroup()
+                .addGap(32, 32, 32)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel9)
+                    .addComponent(jLabel8))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(em, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
+                    .addComponent(ps))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                 .addContainerGap(54, Short.MAX_VALUE)
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,20 +189,10 @@ public class login extends javax.swing.JFrame {
                         .addGap(157, 157, 157))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
                         .addComponent(jLabel11)
-                        .addGap(22, 22, 22))))
-            .addGroup(headerLayout.createSequentialGroup()
-                .addGap(32, 32, 32)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(em, javax.swing.GroupLayout.DEFAULT_SIZE, 260, Short.MAX_VALUE)
-                    .addGroup(headerLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(loginbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(ps))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(22, 22, 22))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, headerLayout.createSequentialGroup()
+                        .addComponent(loginbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74))))
         );
         headerLayout.setVerticalGroup(
             headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -209,9 +209,9 @@ public class login extends javax.swing.JFrame {
                 .addGroup(headerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel9)
                     .addComponent(ps, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(loginbutton, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
                 .addComponent(jLabel11))
         );
 
@@ -291,6 +291,7 @@ String email = em.getText().trim();
 
         String hashedPass = config.hashPassword(password); 
 
+        // 1. Check the main users table
         String sql = "SELECT * FROM users_tbl WHERE email = ? AND password = ?";
         PreparedStatement pstmt = conn.prepareStatement(sql);
         pstmt.setString(1, email);
@@ -298,30 +299,48 @@ String email = em.getText().trim();
 
         ResultSet rs = pstmt.executeQuery();
 
-       // Inside your login result processing
-if (rs.next()) {
-    String role = rs.getString("u_type"); // This defines 'role' so the code below works
-    UserSession sess = UserSession.getInstance();
-    sess.setId(rs.getInt("u_id"));
-    sess.setFullName(rs.getString("full_name")); // Map to full_name column
-    sess.setEmail(rs.getString("email"));
-    sess.setContact(rs.getString("phonenumber"));
-    sess.setType(rs.getString("u_type"));
-    
-    // Redirect logic...
-           // 2. Redirect logic
+        if (rs.next()) {
+            String role = rs.getString("u_type"); 
+            int userId = rs.getInt("u_id"); // Get the User ID
+            
+            UserSession sess = UserSession.getInstance();
+            sess.setFullName(rs.getString("full_name")); 
+            sess.setEmail(rs.getString("email"));
+            sess.setContact(rs.getString("phonenumber"));
+            sess.setType(rs.getString("u_type"));
+            
+            // 2. IF THE USER IS A TRAINER, LOOK UP THE REAL t_id
+            if (role.equalsIgnoreCase("Trainer")) {
+                String trainerSql = "SELECT t_id FROM tbl_trainers WHERE u_id = ?";
+                PreparedStatement tstmt = conn.prepareStatement(trainerSql);
+                tstmt.setInt(1, userId);
+                ResultSet trs = tstmt.executeQuery();
+                
+                if (trs.next()) {
+    sess.setId(trs.getInt("t_id")); // This sets session ID to 1 (example)
+}else {
+                    // If not found in tbl_trainers, use u_id as fallback (or show error)
+                    sess.setId(userId);
+                    System.out.println("Warning: Trainer not found in tbl_trainers!");
+                }
+                trs.close();
+                tstmt.close();
+            } else {
+                // For Admin and Members, just use the u_id
+                sess.setId(userId); 
+            }
+
+            // 3. Redirect logic
             if (role.equalsIgnoreCase("Admin")) {
-                new Admindash.admindashboard().setVisible(true);
+                new DASHBOARDS.admindashboard().setVisible(true);
                 this.dispose();
             } 
             else if (role.equalsIgnoreCase("Trainer")) {
-                // Use getFullName() and ensure your trainerdashboard constructor accepts it
-                new Admindash.trainerdashboard(sess.getFullName()).setVisible(true);
+                new DASHBOARDS.trainerdashboard(sess.getFullName()).setVisible(true);
                 this.dispose();
             } 
             else if (role.equalsIgnoreCase("Member")) {
-                // Use getFullName() and ensure your memberdashboard constructor accepts it
-                new Admindash.memberdashboard(sess.getFullName()).setVisible(true);
+                new DASHBOARDS.memberdashboard(sess.getFullName()).setVisible(true);
                 this.dispose();
             }   
             else {
@@ -340,8 +359,6 @@ if (rs.next()) {
     } catch (Exception e) {
         JOptionPane.showMessageDialog(null, "System Error: " + e.getMessage());
     }
-     
-    
     }//GEN-LAST:event_loginbuttonActionPerformed
 
     private void jLabel9MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel9MouseExited
